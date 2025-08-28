@@ -1,0 +1,222 @@
+/* calendar.css */
+
+.sidebar {
+  width: 240px;
+  background-color: #af98d6;
+  height: 100vh;
+  position: fixed;
+  font-family: "Manrope", sans-serif;
+  color: white;
+  padding-top: 20px;
+  box-sizing: border-box;
+}
+
+.sidebar-title {
+  font-size: 28px;
+  font-weight: 800;
+  padding-left: 20px;
+  margin-bottom: 40px;
+}
+
+.sidebar-nav {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.sidebar-nav li {
+  margin-bottom: 30px;
+}
+
+.sidebar-nav li a {
+  text-decoration: none;
+  color: white;
+  padding: 12px 24px;
+  display: block;
+  font-size: 18px;
+  border-radius: 8px;
+  transition: 0.3s background-color ease;
+}
+
+.sidebar-nav li.active a,
+.sidebar-nav li a:hover {
+  background-color: #8a65c9;
+  font-weight: 700;
+}
+
+.main-content {
+  margin-left: 240px;
+  padding: 40px 40px 60px 40px;
+  font-family: "Manrope", sans-serif;
+  color: #250353;
+  max-width: 960px;
+}
+
+.header-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 50px;
+  font-weight: 700;
+  font-size: 26px;
+}
+
+.header-left {
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+  letter-spacing: 0.1rem;
+  user-select: none;
+  color: #290663;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.profile-bubble {
+  height: 36px;
+  width: 36px;
+  background: #9d89da;
+  border-radius: 100px;
+  font-family: "Manrope", sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+.settings-icon {
+  font-size: 28px;
+  user-select: none;
+  cursor: pointer;
+  color: #9d89da;
+}
+
+.calendar-section h2 {
+  margin-bottom: 30px;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.5em;
+  margin-bottom: 1.5em;
+}
+
+.calendar-grid .calendar-cell {
+  background: #f8f8fb;
+  border-radius: 12px;
+  padding: 12px 0;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+  font-weight: 600;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  transition: 0.2s background-color;
+  color: #250353;
+}
+
+.calendar-grid .calendar-cell.has-entry {
+  background-color: #c4b3f8;
+  color: #3e3292;
+  font-weight: 700;
+}
+
+.calendar-grid .calendar-cell.today {
+  border: 2px solid #695de6;
+}
+
+.calendar-grid .calendar-cell:hover {
+  background-color: #d9d2fa;
+}
+
+.journal-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 350px;
+  background: white;
+  padding: 1.5em;
+  border-radius: 18px;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.25);
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  box-sizing: border-box;
+}
+
+.journal-popup h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-weight: 700;
+  color: #4b449a;
+}
+
+.journal-popup textarea {
+  width: 100%;
+  height: 130px;
+  border-radius: 12px;
+  border: 1px solid #c9c1ff;
+  padding: 10px 15px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 1rem;
+  resize: vertical;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.journal-popup textarea:focus {
+  border-color: #8a6cdf;
+  box-shadow: 0 0 10px #b2a1f1;
+}
+
+.popup-buttons {
+  margin-top: 15px;
+  text-align: right;
+}
+
+.popup-buttons button {
+  background-color: #af98d6;
+  border: none;
+  border-radius: 12px;
+  padding: 8px 18px;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  margin-left: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.popup-buttons button:hover {
+  background-color: #8a65c9;
+}
+
+.journal-list {
+  max-height: 300px;
+  overflow-y: auto;
+  border-radius: 12px;
+  border: 1px solid #d6d0f7;
+  padding: 1em;
+  background: #f7f5ff;
+  font-family: "Manrope", sans-serif;
+  font-size: 14px;
+  color: #4b449a;
+}
+
+.journal-list div {
+  padding: 8px 10px;
+  border-bottom: 1px solid #cbc1ff;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.journal-list div:last-child {
+  border-bottom: none;
+}
+
+.journal-list div:hover {
+  background-color: #e5e0fc;
+}

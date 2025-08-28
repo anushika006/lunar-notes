@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Aurora Notes - Analysis</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/analysis.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <h1 class="sidebar-title">Aurora Notes</h1>
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="index.html">Dashboard</a></li>
+        <li><a href="mood.html">Mood</a></li>
+        <li><a href="todo.html">To-Do</a></li>
+        <li><a href="calendar.html">Calendar</a></li>
+        <li class="active"><a href="analysis.html">Analysis</a></li>
+        <li><a href="gratitude.html">Gratitude</a></li>
+        <li><a href="dreams.html">Dreams & Reflections</a></li>
+        <li><a href="logout.html">Logout</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <header class="header-bar">
+      <div class="header-left">🌙 Lunar Node</div>
+      <div class="header-right">
+        <a href="profile.html" class="profile-bubble" title="Profile">U</a>
+        <a href="#" class="settings-icon" title="Settings">&#9881;</a>
+      </div>
+    </header>
+
+    <section class="analysis-section">
+      <h2>Personal Analysis</h2>
+
+      <section>
+        <h3>Mood Over Time</h3>
+        <canvas id="moodChart" width="600" height="250"></canvas>
+      </section>
+
+      <section>
+        <h3>Gratitude Entries Timeline</h3>
+        <div id="gratitudeAnalysis"></div>
+      </section>
+
+      <section>
+        <h3>Word Cloud of Journal</h3>
+        <div id="wordCloud" style="min-height: 250px; background: #efefef; border-radius: 15px; display:flex;align-items:center;justify-content:center;">
+          <em>Optional word cloud visualization (work in progress)</em>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <!-- ✅ Settings Modal (copied from gratitude.html) -->
+  <div id="settingsModal" class="modal-overlay">
+    <div class="modal-content">
+      <span id="closeSettings" class="modal-close">&times;</span>
+      <h2>Settings</h2>
+      <form id="settingsForm">
+        <label for="theme">Theme</label>
+        <select id="theme" name="theme">
+          <option value="light" selected>Light</option>
+          <option value="night">Night</option>
+          <option value="pastel">Pastel</option>
+          <option value="minimal">Minimal</option>
+          <option value="handwriting">Handwriting</option>
+          <option value="serif">Serif</option>
+          <option value="sans">Sans</option>
+        </select>
+        <label><input type="checkbox" id="notifications" /> Notifications</label>
+        <button type="button" id="resetBtn">Reset All Data</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ✅ Scripts -->
+  <script src="js/analysis.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/settings.js"></script>
+</body>
+</html>

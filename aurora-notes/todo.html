@@ -1,0 +1,228 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Aurora Notes - To-Do</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/todo.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    /* Task categories colors */
+    .category-Study {
+      color: #6a4f93;
+    }
+    .category-Personal {
+      color: #be9cff;
+    }
+    .category-Work {
+      color: #4b6cb7;
+    }
+    /* Completed tasks */
+    .completed {
+      text-decoration: line-through;
+      opacity: 0.6;
+    }
+    /* Delete button style */
+    .delete-btn {
+      background: transparent;
+      border: none;
+      color: #c0392b;
+      cursor: pointer;
+      font-weight: bold;
+      margin-left: 10px;
+    }
+    /* Layout for side by side */
+    .todo-container {
+      display: flex;
+      gap: 30px;
+      flex-wrap: wrap;
+      align-items: flex-start;
+    }
+    .todo-section, .chart-section {
+      flex: 1 1 400px;
+    }
+  </style>
+</head>
+<!-- ✅ Added data-theme -->
+<body data-theme="light">
+  <aside class="sidebar">
+    <h1 class="sidebar-title">Aurora Notes</h1>
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="index.html">Dashboard</a></li>
+        <li><a href="mood.html">Mood</a></li>
+        <li class="active"><a href="todo.html">To-Do</a></li>
+        <li><a href="calendar.html">Calendar</a></li>
+        <li><a href="analysis.html">Analysis</a></li>
+        <li><a href="gratitude.html">Gratitude</a></li>
+        <li><a href="dreams.html">Dreams & Reflections</a></li>
+        <li><a href="logout.html">Logout</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <header class="header-bar">
+      <div class="header-left">🌙 Lunar Node</div>
+      <div class="header-right">
+        <a href="profile.html" class="profile-bubble" title="Profile">U</a>
+        <a href="settings.html" class="settings-icon" title="Settings">&#9881;</a>
+      </div>
+    </header>
+
+    <div class="todo-container">
+      <section class="todo-section">
+        <h2>Your To-Do List</h2>
+        <form id="todoForm" autocomplete="off">
+          <input
+            type="text"
+            id="taskInput"
+            placeholder="Add new task..."
+            required
+            maxlength="60"
+          />
+          <select id="taskCategory" required>
+            <option value="" disabled selected>Select category</option>
+            <option value="Study">Study</option>
+            <option value="Personal">Personal</option>
+            <option value="Work">Work</option>
+          </select>
+          <button type="submit" id="addTaskBtn">Add Task</button>
+        </form>
+
+        <ul id="todoList" class="todo-list"></ul>
+      </section>
+
+      <section class="chart-section">
+        <h2>Task Categories Overview</h2>
+        <canvas id="taskPieChart" width="300" height="300"></canvas>
+      </section>
+    </div>
+  </main>
+
+  <!-- ✅ Settings Modal -->
+  <div id="settingsModal" class="modal-overlay">
+    <div class="modal-content">
+      <span id="closeSettings" class="modal-close">&times;</span>
+      <h2>Settings</h2>
+      <form id="settingsForm">
+        <label for="theme">Theme</label>
+        <select id="theme" name="theme">
+          <option value="light" selected>Light</option>
+          <option value="night">Night</option>
+          <option value="pastel">Pastel</option>
+          <option value="minimal">Minimal</option>
+          <option value="handwriting">Handwriting</option>
+          <option value="serif">Serif</option>
+          <option value="sans">Sans</option>
+        </select>
+        <label><input type="checkbox" id="notifications" /> Notifications</label>
+        <button type="button" id="resetBtn">Reset All Data</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Store tasks in localStorage under 'aurora_todo'
+    let tasks = JSON.parse(localStorage.getItem('aurora_todo') || '[]');
+
+    const todoForm = document.getElementById('todoForm');
+    const taskInput = document.getElementById('taskInput');
+    const taskCategory = document.getElementById('taskCategory');
+    const todoList = document.getElementById('todoList');
+    const ctx = document.getElementById('taskPieChart').getContext('2d');
+    let pieChart;
+
+    // Render tasks list
+    function renderTasks() {
+      todoList.innerHTML = '';
+      tasks.forEach((task, index) => {
+        const li = document.createElement('li');
+        li.className = `category-${task.category}` + (task.completed ? ' completed' : '');
+        li.innerHTML = `
+          <span class="task-text">${task.text}</span>
+          <span class="task-category">[${task.category}]</span>
+          <button class="complete-btn">${task.completed ? 'Undo' : 'Done'}</button>
+          <button class="delete-btn">X</button>
+        `;
+
+        // Complete button toggle
+        li.querySelector('.complete-btn').addEventListener('click', () => {
+          tasks[index].completed = !tasks[index].completed;
+          saveAndRender();
+        });
+
+        // Delete button
+        li.querySelector('.delete-btn').addEventListener('click', () => {
+          tasks.splice(index, 1);
+          saveAndRender();
+        });
+
+        todoList.appendChild(li);
+      });
+      updatePieChart();
+    }
+
+    // Save to localStorage and re-render
+    function saveAndRender() {
+      localStorage.setItem('aurora_todo', JSON.stringify(tasks));
+      renderTasks();
+    }
+
+    // Update pie chart with category counts
+    function updatePieChart() {
+      const counts = { Study: 0, Personal: 0, Work: 0 };
+      tasks.forEach(task => {
+        if (!task.completed) {
+          counts[task.category] = (counts[task.category] || 0) + 1;
+        }
+      });
+
+      const data = {
+        labels: Object.keys(counts),
+        datasets: [{
+          data: Object.values(counts),
+          backgroundColor: ['#6a4f93', '#be9cff', '#4b6cb7'],
+          hoverOffset: 30
+        }]
+      };
+      if (pieChart) {
+        pieChart.data = data;
+        pieChart.update();
+      } else {
+        pieChart = new Chart(ctx, {
+          type: 'pie',
+          data: data,
+          options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                position: 'bottom',
+              },
+            },
+          },
+        });
+      }
+    }
+
+    // Form submit to add task
+    todoForm.addEventListener('submit', e => {
+      e.preventDefault();
+      if (!taskInput.value.trim() || !taskCategory.value) return;
+
+      tasks.push({ text: taskInput.value.trim(), category: taskCategory.value, completed: false });
+      taskInput.value = '';
+      taskCategory.value = '';
+      saveAndRender();
+    });
+
+    // On page load
+    renderTasks();
+  </script>
+
+  <!-- ✅ Include shared scripts so theme + modal works -->
+  <script src="js/dashboard.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/settings.js"></script>
+</body>
+</html>

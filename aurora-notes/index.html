@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Aurora Notes - Dashboard</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+  <style>
+    /* Modal overlay and content CSS */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background-color: rgba(0,0,0,0.4);
+      display: none; /* hidden by default */
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+    }
+
+    .modal-content {
+      background-color: white;
+      border-radius: 12px;
+      padding: 2rem 3rem;
+      max-width: 400px;
+      width: 90%;
+      box-shadow: 0 0 15px rgba(107, 95, 161, 0.25);
+      position: relative;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 1.8rem;
+      cursor: pointer;
+      color: #6a5acd;
+    }
+    .modal-close:hover {
+      color: #473178;
+    }
+
+    .modal-content label,
+    .modal-content select,
+    .modal-content input[type="checkbox"],
+    .modal-content button {
+      margin-top: 1rem;
+      font-weight: 700;
+      color: #6a5acd;
+      cursor: pointer;
+      display: block;
+      width: 100%;
+    }
+
+    .modal-content input[type="checkbox"] {
+      display: inline-block;
+      width: auto;
+      margin-right: 8px;
+    }
+
+    .modal-content button {
+      background-color: #af98d6;
+      border-radius: 18px;
+      padding: 12px 25px;
+      color: white;
+      font-weight: 700;
+      border: none;
+      margin-top: 1.5rem;
+      transition: background-color 0.3s ease;
+    }
+
+    .modal-content button:hover {
+      background-color: #8a65c9;
+    }
+  </style>
+</head>
+<body>
+  <aside class="sidebar">
+    <h1 class="sidebar-title">Aurora Notes</h1>
+    <nav>
+      <ul class="sidebar-nav">
+        <li class="active"><a href="index.html">Dashboard</a></li>
+        <li><a href="mood.html">Mood</a></li>
+        <li><a href="todo.html">To-Do</a></li>
+        <li><a href="calendar.html">Calendar</a></li>
+        <li><a href="analysis.html">Analysis</a></li>
+        <li><a href="gratitude.html">Gratitude</a></li>
+        <li><a href="dreams.html">Dreams & Reflections</a></li>
+        <li><a href="logout.html">Logout</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <header class="header-bar">
+      <div class="header-left">🌙 Lunar Node</div>
+      <div class="header-right">
+        <a href="profile.html" class="profile-bubble" title="Profile">U</a>
+        <a href="#" class="settings-icon" title="Settings">&#9881;</a>
+      </div>
+    </header>
+
+    <section class="dashboard-section">
+      <h2>Dashboard</h2>
+
+      <div class="note-entry">
+        <label for="dailyNote">Write today's note...</label>
+        <textarea id="dailyNote" placeholder="Type your thoughts here..."></textarea>
+        <button id="saveNoteBtn">Save Entry</button>
+      </div>
+
+      <div class="recent-entries">
+        <h3>Recent Entries</h3>
+        <div id="recentEntries">Welcome! Start your first entry.</div>
+      </div>
+
+      <div class="stats">
+        <h3>Stats</h3>
+        <p>Total Entries This Month: <span id="totalEntries">0</span></p>
+        <p>Writing Streak: <span id="writingStreak">0</span> days</p>
+      </div>
+
+      <div class="motivation">
+        <h3>Motivation for Today</h3>
+        <p id="dailyMotivation">"Keep going, you're doing great!"</p>
+      </div>
+
+      <div class="gratitude-summary">
+        <h3>Gratitude Summary</h3>
+        <div id="gratitudeSummary">No gratitude entries yet.</div>
+      </div>
+
+      <div class="dream-reflection-summary">
+        <h3>Recent Dreams & Reflections</h3>
+        <div id="dreamSummary">No dreams logged yet.</div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Settings Modal -->
+  <div id="settingsModal" class="modal-overlay">
+    <div class="modal-content">
+      <span id="closeSettings" class="modal-close">&times;</span>
+      <h2>Settings</h2>
+      <form id="settingsForm">
+        <label for="theme">Theme</label>
+        <select id="theme" name="theme">
+          <option value="light" selected>Light</option>
+          <option value="night">Night</option>
+          <option value="pastel">Pastel</option>
+          <option value="minimal">Minimal</option>
+          <option value="handwriting">Handwriting</option>
+          <option value="serif">Serif</option>
+          <option value="sans">Sans</option>
+        </select>
+        <label><input type="checkbox" id="notifications" /> Notifications</label>
+        <button type="button" id="resetBtn">Reset All Data</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/dashboard.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/settings.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const gratitudeSummary = document.getElementById('gratitudeSummary');
+      const dreamSummary = document.getElementById('dreamSummary');
+
+      function loadGratitudeSummary() {
+        const gratitudes = JSON.parse(localStorage.getItem('aurora_gratitude') || '[]');
+        if (gratitudes.length === 0) {
+          gratitudeSummary.textContent = 'No gratitude entries yet.';
+          return;
+        }
+        const latest = gratitudes.slice(-3).reverse();
+        gratitudeSummary.innerHTML = latest.map(entry =>
+          `<strong>${entry.date}:</strong> ${entry.items.join(', ')}`
+        ).join('<br/>');
+      }
+
+      function loadDreamSummary() {
+        const dreams = JSON.parse(localStorage.getItem('aurora_dreams') || '[]');
+        if (dreams.length === 0) {
+          dreamSummary.textContent = 'No dreams logged yet.';
+          return;
+        }
+        const latest = dreams.slice(-3).reverse();
+        dreamSummary.innerHTML = latest.map(entry =>
+          `<strong>${entry.date}:</strong> ${entry.text.length > 80 ? entry.text.slice(0,80) + '...' : entry.text}</strong>`
+        ).join('<br/>');
+      }
+
+      loadGratitudeSummary();
+      loadDreamSummary();
+    });
+
+    // Modal open/close & reset button logic
+    document.addEventListener('DOMContentLoaded', () => {
+      const modal = document.getElementById('settingsModal');
+      const settingsIcon = document.querySelector('.settings-icon');
+      const closeSettings = document.getElementById('closeSettings');
+      const resetBtn = document.getElementById('resetBtn');
+
+      settingsIcon.addEventListener('click', (e) => {
+        e.preventDefault();
+        modal.style.display = 'flex';
+      });
+
+      closeSettings.addEventListener('click', () => {
+        modal.style.display = 'none';
+      });
+
+      window.addEventListener('click', (event) => {
+        if (event.target === modal) {
+          modal.style.display = 'none';
+        }
+      });
+
+      resetBtn.addEventListener('click', () => {
+        if (confirm('Are you sure you want to reset all data?')) {
+          localStorage.clear();
+          location.reload();
+        }
+      });
+    });
+  </script>
+</body>
+</html>

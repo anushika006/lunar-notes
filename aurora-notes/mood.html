@@ -1,0 +1,78 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Aurora Notes - Mood Tracker</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/mood.css" />
+</head>
+<!-- ✅ Added data-theme -->
+<body data-theme="light">
+  <aside class="sidebar">
+    <h1 class="sidebar-title">Aurora Notes</h1>
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="index.html">Dashboard</a></li>
+        <li class="active"><a href="mood.html">Mood</a></li>
+        <li><a href="todo.html">To-Do</a></li>
+        <li><a href="calendar.html">Calendar</a></li>
+        <li><a href="analysis.html">Analysis</a></li>
+        <li><a href="gratitude.html">Gratitude</a></li>
+        <li><a href="dreams.html">Dreams & Reflections</a></li>
+        <li><a href="logout.html">Logout</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <header class="header-bar">
+      <div class="header-left">🌙 Lunar Node</div>
+      <div class="header-right">
+        <a href="profile.html" class="profile-bubble" title="Profile">U</a>
+        <a href="settings.html" class="settings-icon" title="Settings">&#9881;</a>
+      </div>
+    </header>
+
+    <section class="mood-section">
+      <h2>Mood Tracker</h2>
+      <div class="mood-grid"></div>
+
+      <div class="prompt-section" style="display:none;">
+        <p id="prompt-text"></p>
+        <textarea id="mood-note" rows="5" maxlength="140" placeholder="Write your thoughts here..."></textarea>
+        <button id="saveMoodBtn">Save Mood</button>
+      </div>
+
+      <h3>Recent Mood Timeline</h3>
+      <div id="mood-history"></div>
+    </section>
+  </main>
+
+  <!-- ✅ Settings Modal (same as Gratitude/Dreams) -->
+  <div id="settingsModal" class="modal-overlay">
+    <div class="modal-content">
+      <span id="closeSettings" class="modal-close">&times;</span>
+      <h2>Settings</h2>
+      <form id="settingsForm">
+        <label for="theme">Theme</label>
+        <select id="theme" name="theme">
+          <option value="light" selected>Light</option>
+          <option value="night">Night</option>
+          <option value="pastel">Pastel</option>
+          <option value="minimal">Minimal</option>
+          <option value="handwriting">Handwriting</option>
+          <option value="serif">Serif</option>
+          <option value="sans">Sans</option>
+        </select>
+        <label><input type="checkbox" id="notifications" /> Notifications</label>
+        <button type="button" id="resetBtn">Reset All Data</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/mood.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/settings.js"></script>
+</body>
+</html>

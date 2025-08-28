@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Aurora Notes - Profile & Settings</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/profile.css" />
+</head>
+<body>
+  <aside class="sidebar">
+    <h1 class="sidebar-title">Aurora Notes</h1>
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="index.html">Dashboard</a></li>
+        <li><a href="mood.html">Mood</a></li>
+        <li><a href="todo.html">To-Do</a></li>
+        <li><a href="calendar.html">Calendar</a></li>
+        <li><a href="analysis.html">Analysis</a></li>
+        <li><a href="gratitude.html">Gratitude</a></li>
+        <li><a href="dreams.html">Dreams & Reflections</a></li>
+        <li><a href="logout.html">Logout</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <header class="header-bar">
+      <div class="header-left">🌙 Lunar Node</div>
+      <div class="header-right">
+        <div class="profile-bubble" id="profileInitials">U</div>
+        <div class="settings-icon" title="Settings">&#9881;</div>
+      </div>
+    </header>
+
+    <section class="profile-section">
+      <h2>Profile & Settings</h2>
+
+      <form id="profileForm">
+        <label for="userName">Name:</label>
+        <input type="text" id="userName" placeholder="Your name" required />
+
+        <label for="userEmail">Email:</label>
+        <input type="email" id="userEmail" placeholder="Your email" required />
+
+        <label for="newPassword">New Password:</label>
+        <input type="password" id="newPassword" placeholder="Leave blank to keep current" />
+
+        <button type="submit" id="saveProfileBtn">Save Changes</button>
+      </form>
+
+      <div id="profileMessage" class="profile-message"></div>
+    </section>
+  </main>
+
+  <script src="js/profile.js"></script>
+  
+</body>
+</html>

@@ -1,0 +1,65 @@
+/* settings.css - Matches Profile page style */
+
+.main-content {
+  margin-left: 240px;
+  padding: 40px 40px 60px 40px;
+  font-family: "Manrope", sans-serif;
+  color: #250353;
+  max-width: 960px;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.settings-section {
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.settings-section h2 {
+  margin-bottom: 30px;
+  font-weight: 700;
+  color: #4b449a;
+}
+
+.settings-section label {
+  font-weight: 700;
+  font-size: 16px;
+  display: block;
+  color: #4b449a;
+  margin-bottom: 0.6rem;
+}
+
+.settings-section input,
+.settings-section select {
+  padding: 12px 15px;
+  border-radius: 12px;
+  border: 1px solid #c5bff7;
+  outline: none;
+  font-size: 16px;
+  font-family: "Manrope", sans-serif;
+  color: #2a205b;
+  width: 100%;
+  margin-bottom: 18px;
+}
+
+.settings-section input:focus,
+.settings-section select:focus {
+  border-color: #8a6cdf;
+  box-shadow: 0 0 12px #a59de5;
+}
+
+.settings-section button {
+  background-color: #af98d6;
+  color: white;
+  font-weight: 700;
+  font-size: 18px;
+  border: none;
+  padding: 14px 25px;
+  border-radius: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.settings-section button:hover {
+  background-color: #8a65c9;
+}

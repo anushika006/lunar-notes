@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Aurora Notes - Gratitude Log</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/gratitude.css" />
+</head>
+<body>
+  <aside class="sidebar">
+    <h1 class="sidebar-title">Aurora Notes</h1>
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="index.html">Dashboard</a></li>
+        <li><a href="mood.html">Mood</a></li>
+        <li><a href="todo.html">To-Do</a></li>
+        <li><a href="calendar.html">Calendar</a></li>
+        <li><a href="analysis.html">Analysis</a></li>
+        <li class="active"><a href="gratitude.html">Gratitude</a></li>
+        <li><a href="dreams.html">Dreams & Reflections</a></li>
+        <li><a href="logout.html">Logout</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <header class="header-bar">
+      <div class="header-left">🌙 Lunar Node</div>
+      <div class="header-right">
+        <a href="profile.html" class="profile-bubble" title="Profile">U</a>
+        <a href="settings.html" class="settings-icon" title="Settings">&#9881;</a>
+      </div>
+    </header>
+
+    <section class="gratitude-section">
+      <h2>Daily Gratitude</h2>
+      <form id="gratitudeForm" autocomplete="off">
+        <label>Write 3 things you’re grateful for today:</label>
+        <input type="text" maxlength="60" class="gratitude-input" placeholder="Gratitude 1" required />
+        <input type="text" maxlength="60" class="gratitude-input" placeholder="Gratitude 2" required />
+        <input type="text" maxlength="60" class="gratitude-input" placeholder="Gratitude 3" required />
+        <button type="submit" id="saveGratitudeBtn">Save</button>
+      </form>
+
+      <h3>Gratitude Timeline</h3>
+      <div id="gratitudeTimeline" class="gratitude-timeline"></div>
+    </section>
+  </main>
+
+  <script src="js/gratitude.js"></script>
+    <!-- Settings Modal -->
+  <div id="settingsModal" class="modal-overlay">
+    <div class="modal-content">
+      <span id="closeSettings" class="modal-close">&times;</span>
+      <h2>Settings</h2>
+      <form id="settingsForm">
+        <label for="theme">Theme</label>
+        <select id="theme" name="theme">
+          <option value="light" selected>Light</option>
+          <option value="night">Night</option>
+          <option value="pastel">Pastel</option>
+          <option value="minimal">Minimal</option>
+          <option value="handwriting">Handwriting</option>
+          <option value="serif">Serif</option>
+          <option value="sans">Sans</option>
+        </select>
+        <label><input type="checkbox" id="notifications" /> Notifications</label>
+        <button type="button" id="resetBtn">Reset All Data</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/dashboard.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/settings.js"></script>
+
+
+</body>
+</html>
